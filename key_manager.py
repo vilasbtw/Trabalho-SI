@@ -29,3 +29,15 @@ def salvar_chaves(nome_usuario, chave_privada, chave_publica):
             encoding=serialization.Encoding.PEM,
             format=serialization.PublicFormat.SubjectPublicKeyInfo,
         ))
+
+def carregar_chave_privada(nome_usuario):
+    caminho = os.path.join(KEYS_DIR, f"{nome_usuario}_priv.pem")
+    with open(caminho, "rb") as f:
+        chave_privada = serialization.load_pem_private_key(f.read(), password=None)
+    return chave_privada
+
+def carregar_chave_publica(nome_usuario):
+    caminho = os.path.join(KEYS_DIR, f"{nome_usuario}_pub.pem")
+    with open(caminho, "rb") as f:
+        chave_publica = serialization.load_pem_public_key(f.read())
+    return chave_publica
