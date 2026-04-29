@@ -49,6 +49,13 @@ def carregar_pacote(nome_arquivo="mensagem_cifrada.json"):
         pacote = json.load(f)
     return pacote
 
+def deletar_pacote(nome_arquivo="mensagem_cifrada.json"):
+    caminho = os.path.join(MENSAGENS_DIR, nome_arquivo)
+    if os.path.exists(caminho):
+        os.remove(caminho)
+        return True
+    return False
+
 def decifrar_mensagem(pacote, chave_privada_destinatario):
     payload_cifrado = base64.b64decode(pacote["payload_cifrado"])
     iv = base64.b64decode(pacote["iv"])
