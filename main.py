@@ -52,7 +52,12 @@ def receber_mensagem():
         print("[ERRO] Nenhuma mensagem encontrada.")
         return
 
-    mensagem, assinatura = decifrar_mensagem(pacote, chave_privada_destinatario)
+    try:
+        mensagem, assinatura = decifrar_mensagem(pacote, chave_privada_destinatario)
+    except ValueError:
+        print("\n[ALERTA] Falha na decifragem! Você não tem permissão para ler esta mensagem ou ela foi corrompida.")
+        return
+
     assinatura_valida = verificar_assinatura(mensagem, assinatura, chave_publica_remetente)
 
     if not assinatura_valida:
